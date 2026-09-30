@@ -1,0 +1,398 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;1,500;1,600&display=swap');
+
+:root {
+  font-family: "DM Mono", monospace;
+  color: #e9e6df;
+  background: #0a0a0a;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #0a0a0a;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+main {
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      #171717 0,
+      #0a0a0a 48%,
+      #070707 100%
+    );
+}
+
+main::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background-image:
+    linear-gradient(#aaa1 1px, transparent 1px),
+    linear-gradient(90deg, #aaa1 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.top {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  padding: 34px 42px 0;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: #888;
+  text-transform: uppercase;
+}
+
+h1 {
+  font: 500 clamp(44px, 6vw, 82px) / 0.92
+    "Playfair Display", serif;
+  margin: 25px 0 16px;
+  letter-spacing: -0.04em;
+}
+
+h1 i {
+  font-weight: 500;
+}
+
+.top p {
+  color: #8c8c8c;
+  font-size: 11px;
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.controls button {
+  background: none;
+  border: 1px solid #333;
+  color: #777;
+  padding: 8px 12px;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+}
+
+.controls .active {
+  color: #eee;
+  border-color: #777;
+}
+
+.universe {
+  height: 620px;
+  position: relative;
+  margin-top: -5px;
+  display: grid;
+  place-items: center;
+}
+
+.grid {
+  position: absolute;
+  width: 70vw;
+  height: 70vw;
+  max-width: 680px;
+  max-height: 680px;
+  border: 1px solid #272727;
+  border-radius: 50%;
+  opacity: 0.55;
+}
+
+.orbit {
+  position: absolute;
+  border: 1px solid #252525;
+  border-radius: 50%;
+  transform: rotate(-20deg);
+}
+
+.o1 {
+  width: 520px;
+  height: 250px;
+}
+
+.o2 {
+  width: 720px;
+  height: 350px;
+}
+
+.root-node {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #0d0d0d;
+  color: #eee;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.root-node span {
+  position: absolute;
+  right: -24px;
+  top: 4px;
+  color: #555;
+  font-size: 8px;
+}
+
+.node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform:
+    translate(
+      calc(-50% + var(--x)),
+      calc(-50% + var(--y))
+    );
+  border: 0;
+  background: none;
+  color: #777;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  padding: 8px;
+}
+
+.node::before {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border: 1px solid #777;
+  border-radius: 50%;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -3px);
+  background: #0a0a0a;
+}
+
+.node:hover,
+.node.category {
+  color: #eee;
+}
+
+.node.category {
+  font-size: 11px;
+}
+
+.node em {
+  font-style: normal;
+  color: #555;
+  margin-left: 8px;
+  font-size: 8px;
+}
+
+.inspector {
+  position: fixed;
+  right: 28px;
+  bottom: 55px;
+  width: 290px;
+  border-left: 1px solid #2d2d2d;
+  padding: 18px 0 18px 22px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #0a0a0ae8 12%
+  );
+  z-index: 8;
+}
+
+.inspector h2 {
+  font: 500 27px / 1.1
+    "Playfair Display", serif;
+  margin: 10px 0;
+}
+
+.inspector label {
+  font-size: 8px;
+  border: 1px solid #555;
+  padding: 4px 7px;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.inspector p {
+  font-size: 10px;
+  color: #888;
+  line-height: 1.7;
+}
+
+.meta {
+  font-size: 8px;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.children {
+  margin-top: 15px;
+  display: grid;
+  gap: 5px;
+}
+
+.children button {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #222;
+  text-align: left;
+  color: #999;
+  padding: 7px 0;
+  font-size: 9px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.children button:hover {
+  color: #fff;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  border-top: 1px solid #222;
+  background: #090909e8;
+  backdrop-filter: blur(10px);
+  height: 42px;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 8px;
+  color: #666;
+  letter-spacing: 0.12em;
+}
+
+footer a,
+footer button {
+  color: #777;
+  background: none;
+  border: 0;
+  text-decoration: none;
+  font-size: 8px;
+}
+
+footer a:hover,
+footer button:hover {
+  color: #eee;
+}
+
+.index {
+  padding: 70px 42px 100px;
+  max-width: 1100px;
+}
+
+.search input {
+  width: 100%;
+  background: #111;
+  border: 1px solid #292929;
+  color: #eee;
+  padding: 14px;
+  outline: 0;
+}
+
+.rows {
+  margin-top: 20px;
+}
+
+.row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 160px 1fr 120px;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid #222;
+  color: #999;
+  padding: 14px 0;
+  cursor: pointer;
+}
+
+.row strong {
+  color: #ddd;
+  font-weight: 400;
+}
+
+.row small {
+  color: #555;
+}
+
+.row:hover strong {
+  color: #fff;
+}
+
+@media (max-width: 800px) {
+  .top {
+    padding: 24px 20px 0;
+  }
+
+  .universe {
+    height: 570px;
+    transform: scale(0.82);
+    transform-origin: top center;
+  }
+
+  .inspector {
+    left: 14px;
+    right: 14px;
+    bottom: 50px;
+    width: auto;
+    padding: 12px 0 8px 14px;
+  }
+
+  .inspector p {
+    margin: 6px 0;
+  }
+
+  .children {
+    display: none;
+  }
+
+  footer {
+    padding: 0 14px;
+  }
+
+  .top p {
+    max-width: 220px;
+  }
+
+  .controls {
+    display: none;
+  }
+
+  .index {
+    padding: 40px 20px 100px;
+  }
+
+  .row {
+    grid-template-columns: 90px 1fr 70px;
+    font-size: 9px;
+  }
+}
